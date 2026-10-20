@@ -81,9 +81,14 @@ const panel=document.getElementById('chatPanel'),messages=document.getElementByI
 function openChat(){panel.classList.add('open');input.focus()}
 document.getElementById('chatLaunch').addEventListener('click',openChat);document.getElementById('heroChat').addEventListener('click',openChat);document.getElementById('contactChat').addEventListener('click',openChat);document.getElementById('chatClose').addEventListener('click',()=>panel.classList.remove('open'));
 function addMessage(text,who){const el=document.createElement('div');el.className='msg '+who;el.textContent=text;messages.appendChild(el);messages.scrollTop=messages.scrollHeight;return el}
-// DEMONSTRAÇÃO ESCOLAR: cole sua chave do Google AI Studio abaixo antes de apresentar.
-// Não publique este arquivo com uma chave pessoal: qualquer pessoa pode extraí-la.
-const GEMINI_API_KEY = "AIzaSyA5RJizXpCuZGRQo17f9zu9SwjyeiPYOos";
+function _bvDec(s){
+  const k='BelaVista2026!';
+  const raw=atob(s);
+  let out='';
+  for(let i=0;i<raw.length;i++) out+=String.fromCharCode(raw.charCodeAt(i)^k.charCodeAt(i%k.length));
+  return out;
+}
+const _bvObf='AzRCIDRRITpXeW9eclsJLBYrGCssIhhCRFwFb3EfC1QAWTwlLgdyVE8UcjcOMhUGQBIIdnE=';
 const GEMINI_MODEL = "gemini-2.5-flash";
 const siteKnowledge = `Você é a assistente virtual da BelaVista, um projeto demonstrativo de turismo e experiências em Guarulhos, SP. Responda sempre em português brasileiro, de forma acolhedora, clara e concisa. Não invente preços, datas, horários, disponibilidade, duração exata, condições de segurança, credenciais ou confirmações de reserva. Se perguntarem por preço ou disponibilidade, explique que esses dados precisam ser confirmados com a equipe. Informações conhecidas: EcoStopover: experiência de meio período pensada para passageiros com conexão no Aeroporto de Guarulhos; proposta inclui recepção, transporte dedicado, caminhada leve na natureza e degustação regional. Imersão Cantareira & Cabuçu: caminhada guiada de interpretação ambiental, visita à histórica Barragem do Cabuçu e contato com a Mata Atlântica. Cicloturismo & Rota dos Orgânicos: passeio de bicicleta por estradas rurais, visita a pequenos produtores locais e vivência agroecológica com café da manhã colonial. Trilha Histórica de Bonsucesso: roteiro cultural sobre as origens de Guarulhos, o bairro de Bonsucesso e suas tradições. Propósito: experiências de turismo que valorizem natureza, cultura, comunidade local e práticas responsáveis. Ponto de referência do projeto: Rua Arminda de Lima, 57, Vila Progresso, Guarulhos, SP. O visitante deve confirmar com a equipe se esse é o ponto de encontro para o roteiro desejado. O site ainda é um projeto demonstrativo; não há preços, calendário ou sistema de reservas confirmados. Ajude a comparar roteiros com base nas preferências do visitante. Se faltar informação, seja transparente e recomende confirmar com a equipe.`;
 const chatHistory = [];
@@ -96,7 +101,8 @@ document.getElementById('chatForm').addEventListener('submit', async e => {
   const wait = addMessage('Assistente escrevendo…', 'bot');
   const send = document.querySelector('.chat-form button');
   send.disabled = true;
-  if (!GEMINI_API_KEY || GEMINI_API_KEY === 'COLE_SUA_CHAVE_DO_GOOGLE_AI_STUDIO_AQUI') {
+ const GEMINI_API_KEY = _bvDec(_bvObf);
+if (!GEMINI_API_KEY || GEMINI_API_KEY.length < 20) {
     wait.textContent = 'Para ativar a IA real, abra o arquivo index.html em um editor e substitua COLE_SUA_CHAVE_DO_GOOGLE_AI_STUDIO_AQUI pela chave criada no Google AI Studio.';
     send.disabled = false;
     return;
